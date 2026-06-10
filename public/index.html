@@ -417,13 +417,26 @@
   .word-note{margin-top:22px;font-size:.84rem;color:#6c7d72;background:#fff;border:1px dashed #d8cfb8;
     border-radius:12px;padding:14px 18px}
   .word-note a{color:var(--green-700)}
-  @media(max-width:720px){.scrip{grid-template-columns:1fr}}
+  .word-feature{background:var(--green-900);color:#fff;border-radius:18px;padding:28px 30px;margin-bottom:28px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .word-feature::before{content:"\201C";position:absolute;top:-18px;left:14px;font-size:120px;color:rgba(255,255,255,.12);font-family:Georgia,serif}
+  .word-feature .fq{font-size:1.35rem;font-weight:800;line-height:1.5;position:relative}
+  .word-feature .fq b{color:var(--sun)}
+  .word-feature cite{display:block;font-style:normal;font-size:.85rem;color:var(--green-300);margin-top:12px}
+  .word-feature .sub{font-size:.95rem;color:#d6ebdc;margin-top:14px;line-height:1.7}
+  @media(max-width:720px){.scrip{grid-template-columns:1fr}.word-feature .fq{font-size:1.12rem}}
 </style>
 <section id="word">
   <div class="wrap">
     <div class="eyebrow">Bible & Spirit of Prophecy</div>
     <h2>숲에서 만나는 말씀</h2>
     <p class="word-intro">삼육대학교는 재림교회가 세운 학교입니다. 화잇 여사는 "천연계는 위대한 교과서"라고 했고, 예수님도 <b>호숫가와 수풀에서</b> 가르치셨습니다(실물교훈 24쪽). 오늘 제명호수 둘레숲의 나무·꽃·푸른 잎을 분류하고 관찰한 그 자리에서, 같은 자연이 들려주는 성경의 말씀과 예언의 신 기별을 함께 묵상합니다. <b>모든 본문은 재림마을에서 직접 확인한 원문</b>입니다.</p>
+
+    <div class="word-feature">
+      <p class="fq">"이 점에 있어서 천연계는 <b>해설자(解說者)를 필요로 한다.</b>"</p>
+      <cite>엘렌 G. 화잇, 『교육』 제4장 「천연계의 가르침」, 101쪽</cite>
+      <p class="sub">화잇 여사는 자연이 스스로 다 말해 주지 못하므로 <b>해설하는 사람</b>이 필요하다고 했습니다. 오늘 우리가 하는 숲해설이 바로 그 일 — "세계는 교과서요 인생은 학교"(『교육』 100쪽)가 되도록 자연의 언어를 풀어 주는 것입니다.</p>
+    </div>
 
     <div class="scrip">
 
@@ -438,6 +451,8 @@
           <div class="src">✍️ 예언의 신</div>
           <blockquote>"실로 천연계는 위대한 교과서이므로 우리는 이 책을 성경과 연관시켜서 … 하나님의 품성을 가르쳐 주(어야 한다)."
           <cite>엘렌 G. 화잇, 『실물교훈』 제1장, 24쪽</cite></blockquote>
+          <blockquote style="margin-top:12px">"아직 책을 읽는다든지 교실에서 공부할 수 없는 어린이들에게 있어서, <b>만물은 끝없는 교훈과 기쁨의 원천</b>이 된다."
+          <cite>엘렌 G. 화잇, 『교육』 제4장, 100쪽</cite></blockquote>
         </div>
       </div>
 
@@ -452,6 +467,8 @@
           <div class="src">✍️ 예언의 신</div>
           <blockquote>"그는 우리가 피어나는 모든 백합화와 <b>뾰족뾰족 싹트는 모든 풀잎사귀</b>에서 이같은 기별을 찾아내어 읽기를 바라신다."
           <cite>엘렌 G. 화잇, 『실물교훈』 제1장, 19쪽</cite></blockquote>
+          <blockquote style="margin-top:12px">"'하나님은 곧 사랑이시라'는 문구는 … 돋아나는 풀싹마다 기록되었다. <b>잎이 청청하게 무성한 수풀의 교목(喬木)들</b>, 이 모든 것은 우리 하나님의 … 권고(眷顧)를 증거하는 것이다."
+          <cite>엘렌 G. 화잇, 『정로의 계단』 제1장, 10쪽</cite></blockquote>
         </div>
       </div>
 
@@ -480,6 +497,8 @@
           <div class="src">✍️ 예언의 신</div>
           <blockquote>"씨 가운데 있는 배종(胚種)은 <b>하나님께서 그 속에 넣어 주신 생명력의 전개</b>로 말미암아 자라나는 것이지 사람의 힘으로 자라는 것이 아니다."
           <cite>엘렌 G. 화잇, 『실물교훈』 제5장, 77쪽</cite></blockquote>
+          <blockquote style="margin-top:12px">"모든 초목과 꽃들은 … 하나님께서 … 공급하시는 것을 받음으로 자라난다. 초목이나 어린 아이는 … <b>공기, 일광, 영양</b>으로 말미암아 자라난다."
+          <cite>엘렌 G. 화잇, 『정로의 계단』 제8장, 68쪽 (잎의 광합성과 연결)</cite></blockquote>
         </div>
       </div>
 
@@ -508,13 +527,15 @@
           <div class="src">✍️ 예언의 신</div>
           <blockquote>"천연계의 미 그 자체가 우리의 심령을 죄와 세속적 매력에서 떠나게 하여 순결함과 화평함을 추구하게 하고 <b>하나님께로 돌아가도록 인도한다</b>."
           <cite>엘렌 G. 화잇, 『실물교훈』 제1장, 24쪽</cite></blockquote>
+          <blockquote style="margin-top:12px">"<b>천연계와 계시(성경)는 둘 다 하나님의 사랑을 증거한다.</b>"
+          <cite>엘렌 G. 화잇, 『정로의 계단』 제1장, 9쪽</cite></blockquote>
         </div>
       </div>
 
     </div>
 
     <div class="word-note">
-      📚 <b>출처</b>: 성경 본문은 재림마을 <a href="https://www.adventist.or.kr/sijosa/bible.php" target="_blank" rel="noopener">온라인 성경(개역개정판)</a>, 화잇 여사 인용은 재림마을 <a href="https://www.adventist.or.kr/channel/bbs/content.php?co_id=egw_writings_01&book=COL" target="_blank" rel="noopener">『실물교훈』(예언의 신)</a> 원문에서 직접 확인했습니다. 영어 원문 대조는 <a href="https://m.egwwritings.org/ko" target="_blank" rel="noopener">EGW Writings</a>, 학술 자료는 <a href="https://www.syu.ac.kr/egw/" target="_blank" rel="noopener">삼육대학교 엘렌 G. 화잇 연구센터</a>에서 볼 수 있습니다. 쪽수는 시조사 번역본 기준이며 판차에 따라 다를 수 있습니다.
+      📚 <b>출처</b>: 성경 본문은 재림마을 <a href="https://www.adventist.or.kr/sijosa/bible.php" target="_blank" rel="noopener">온라인 성경(개역개정판)</a>, 화잇 여사 인용은 재림마을 예언의 신 <a href="https://www.adventist.or.kr/channel/bbs/content.php?co_id=egw_writings_01&book=COL" target="_blank" rel="noopener">『실물교훈』</a>·<a href="https://www.adventist.or.kr/channel/bbs/content.php?co_id=egw_writings_01&book=ED" target="_blank" rel="noopener">『교육』</a>·<a href="https://www.adventist.or.kr/channel/bbs/content.php?co_id=egw_writings_01&book=SC" target="_blank" rel="noopener">『정로의 계단』</a> 원문에서 직접 확인했습니다. 영어 원문 대조는 <a href="https://m.egwwritings.org/ko" target="_blank" rel="noopener">EGW Writings</a>, 학술 자료는 <a href="https://www.syu.ac.kr/egw/" target="_blank" rel="noopener">삼육대학교 엘렌 G. 화잇 연구센터</a>에서 볼 수 있습니다. 쪽수는 시조사 번역본 기준이며 판차에 따라 다를 수 있습니다.
     </div>
   </div>
 </section>
