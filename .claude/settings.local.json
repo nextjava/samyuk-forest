@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:namu.wiki)",
+      "WebFetch(domain:www.treeinfo.net)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('firebase.json'\\)\\); console.log\\('OK'\\)\")",
+      "Bash(firebase login:list)",
+      "Bash(firebase projects:create samyuk-forest --display-name \"Samyuk Forest\")",
+      "Bash(firebase deploy *)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} · %{size_download} bytes\\\\n\" https://samyuk-forest.web.app)",
+      "Bash(curl -s https://samyuk-forest.web.app)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git -c commit.gpgsign=false commit -q -m ' *)",
+      "Bash(git --no-pager log --oneline)"
+    ]
+  }
+}
