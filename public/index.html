@@ -875,6 +875,13 @@
   .post .ph time{font-size:.74rem;color:#9aaaa0}
   .post p{white-space:pre-wrap;color:#33433a;font-size:.95rem}
   .ix-empty{color:#8a9b90;font-size:.9rem;padding:14px 0}
+  .admin-link{background:none;border:1px solid #d8e6dc;color:#8a9b90;border-radius:20px;
+    padding:5px 13px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+  .admin-link:hover{border-color:var(--green-500);color:var(--green-700)}
+  .del-btn{display:block;width:100%;background:#fff0ee;border:1px solid #f3c4bd;color:#c0392b;
+    border-radius:0 0 11px 11px;padding:7px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:2px}
+  .del-btn:hover{background:#fbe2de}
+  .post .del-btn{border-radius:8px;margin-top:8px}
 </style>
 <section id="share">
   <div class="wrap">
@@ -885,8 +892,8 @@
       <div class="row">
         <input type="text" id="ph-name" maxlength="30" placeholder="이름/모둠 (예: 1모둠 민준)" />
       </div>
-      <label class="file" for="ph-file">📸 사진 선택 / 촬영하기
-        <input type="file" id="ph-file" accept="image/*" capture="environment" hidden />
+      <label class="file" for="ph-file">📸 갤러리에서 선택 또는 촬영하기
+        <input type="file" id="ph-file" accept="image/*" hidden />
       </label>
       <div class="preview" id="ph-preview"><img id="ph-img" alt="미리보기"><div class="meta" id="ph-meta"></div></div>
       <div class="row" style="margin-top:12px"><input type="text" id="ph-caption" maxlength="200" placeholder="한 줄 설명 (선택) — 무슨 나무·무엇인가요?" /></div>
@@ -947,8 +954,10 @@
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp }
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp, doc, deleteDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCsBwy7uAQ00EZlQ5ksQws4ul74QbDOHo4",
@@ -958,9 +967,53 @@
     messagingSenderId: "362748712214",
     appId: "1:362748712214:web:45a71a21e0f36ca884ec37"
   };
-  const db = getFirestore(initializeApp(firebaseConfig));
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const ADMIN_EMAIL = "jits.admin@samyuk-forest.web";
+  let adminMode = false;
   const $ = (id) => document.getElementById(id);
   const lb = $('lightbox');
+
+  // ---- 🔒 관리자 모드 (로그인 시 삭제 버튼 노출) ----
+  function adminBar(sectionId){
+    const sec = $(sectionId).querySelector('.wrap');
+    const bar = document.createElement('div');
+    bar.style.cssText = 'text-align:right;margin:-6px 0 14px';
+    const btn = document.createElement('button');
+    btn.className = 'admin-link'; btn.dataset.sec = sectionId;
+    bar.appendChild(btn); sec.insertBefore(bar, sec.children[2] || null);
+    return btn;
+  }
+  const adminBtns = [adminBar('share'), adminBar('board')];
+  function paintAdminBtns(){
+    adminBtns.forEach(b=>{ b.textContent = adminMode ? '🔓 관리자 모드 — 로그아웃' : '🔒 관리자'; });
+  }
+  async function toggleAdmin(){
+    if(adminMode){ await signOut(auth); return; }
+    const pw = prompt('관리자 비밀번호를 입력하세요');
+    if(!pw) return;
+    try{ await signInWithEmailAndPassword(auth, ADMIN_EMAIL, pw); }
+    catch(err){ alert('로그인 실패: '+(err.code||err.message)); }
+  }
+  adminBtns.forEach(b=> b.addEventListener('click', toggleAdmin));
+  onAuthStateChanged(auth, (user)=>{
+    adminMode = !!(user && user.email === ADMIN_EMAIL);
+    paintAdminBtns(); loadPhotos(); loadFeedback();
+  });
+  paintAdminBtns();
+
+  async function removeDoc(coll, id, label){
+    if(!confirm(label+'\n정말 삭제할까요? 되돌릴 수 없습니다.')) return;
+    try{ await deleteDoc(doc(db, coll, id)); (coll==='photos'?loadPhotos:loadFeedback)(); }
+    catch(err){ alert('삭제 실패: '+(err.code||err.message)); }
+  }
+  function delButton(coll, id, label){
+    const b = document.createElement('button');
+    b.className = 'del-btn'; b.textContent = '🗑 삭제';
+    b.addEventListener('click', (e)=>{ e.stopPropagation(); removeDoc(coll, id, label); });
+    return b;
+  }
 
   function fmt(ts){
     try{ const d = ts.toDate(); const p=n=>String(n).padStart(2,'0');
@@ -1037,7 +1090,9 @@
         const b = document.createElement('b'); b.textContent = d.name || '익명';
         const sp = document.createElement('span'); sp.textContent = (d.caption?d.caption+' · ':'') + fmt(d.createdAt);
         cap.appendChild(b); cap.appendChild(sp);
-        fig.appendChild(img); fig.appendChild(cap); wall.appendChild(fig);
+        fig.appendChild(img); fig.appendChild(cap);
+        if(adminMode) fig.appendChild(delButton('photos', doc.id, (d.name||'')+' 사진'));
+        wall.appendChild(fig);
       });
     }catch(err){ wall.innerHTML='<div class="ix-empty">사진을 불러오지 못했어요. ('+(err.code||err.message)+')</div>'; }
   }
@@ -1068,7 +1123,9 @@
         const t = document.createElement('time'); t.textContent = fmt(d.createdAt);
         ph.appendChild(b); ph.appendChild(t);
         const p = document.createElement('p'); p.textContent = d.message || '';
-        el.appendChild(ph); el.appendChild(p); box.appendChild(el);
+        el.appendChild(ph); el.appendChild(p);
+        if(adminMode) el.appendChild(delButton('feedback', doc.id, (d.name||'')+' 글'));
+        box.appendChild(el);
       });
     }catch(err){ box.innerHTML='<div class="ix-empty">피드백을 불러오지 못했어요. ('+(err.code||err.message)+')</div>'; }
   }

@@ -16,7 +16,9 @@ service cloud.firestore {
         && request.resource.data.image.size() > 100
         && request.resource.data.image.size() < 900000
         && request.resource.data.createdAt is timestamp;
-      allow update, delete: if false;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && request.auth.token.email == 'jits.admin@samyuk-forest.web';
     }
 
     // 💬 피드백 게시판
@@ -31,7 +33,9 @@ service cloud.firestore {
         && request.resource.data.message.size() >= 1
         && request.resource.data.message.size() <= 1000
         && request.resource.data.createdAt is timestamp;
-      allow update, delete: if false;
+      allow update: if false;
+      allow delete: if request.auth != null
+        && request.auth.token.email == 'jits.admin@samyuk-forest.web';
     }
 
     match /{document=**} {
