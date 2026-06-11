@@ -171,6 +171,8 @@
     <li><a href="#map">동선 지도</a></li>
     <li><a href="#scenario">해설 시나리오</a></li>
     <li><a href="#prep">준비물</a></li>
+    <li><a href="#share">사진·탁본</a></li>
+    <li><a href="#board">피드백</a></li>
   </ul>
 </nav>
 
@@ -837,6 +839,81 @@
   </div>
 </section>
 
+<!-- ===== SHARE (photo upload) + BOARD (feedback) ===== -->
+<style>
+  #share{background:var(--green-100)}
+  .ix-form{background:#fff;border-radius:16px;box-shadow:var(--shadow);border:1px solid #eef3ee;padding:20px;margin-bottom:24px}
+  .ix-form .row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .ix-form input[type=text],.ix-form textarea{
+    width:100%;border:1.5px solid #d8e6dc;border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.95rem;color:var(--ink)}
+  .ix-form input[type=text]{flex:1;min-width:140px}
+  .ix-form textarea{min-height:84px;resize:vertical}
+  .ix-form input:focus,.ix-form textarea:focus{outline:none;border-color:var(--green-500)}
+  .ix-form label.file{display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
+    border:2px dashed var(--green-300);border-radius:12px;padding:22px;color:var(--green-700);font-weight:700;background:#f6fbf7;text-align:center}
+  .ix-form label.file:hover{background:#eef7f0}
+  .ix-form .preview{margin:12px 0;display:none}
+  .ix-form .preview img{max-width:200px;max-height:200px;border-radius:10px;border:1px solid #e3ebe4}
+  .ix-form .preview .meta{font-size:.8rem;color:#6c7d72;margin-top:6px}
+  .ix-btn{background:var(--green-700);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-weight:800;
+    font-size:.95rem;cursor:pointer;transition:.15s;font-family:inherit}
+  .ix-btn:hover{background:var(--green-900)}
+  .ix-btn:disabled{opacity:.5;cursor:not-allowed}
+  .ix-msg{font-size:.88rem;margin-top:10px;min-height:1.2em}
+  .ix-msg.ok{color:var(--green-700);font-weight:700}
+  .ix-msg.err{color:#c0392b;font-weight:700}
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .wall figure{margin:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #eef3ee}
+  .wall img{width:100%;height:150px;object-fit:cover;display:block;cursor:zoom-in}
+  .wall figcaption{padding:8px 10px;font-size:.8rem}
+  .wall figcaption b{color:var(--green-900);display:block}
+  .wall figcaption span{color:#8a9b90;font-size:.74rem}
+  .posts{display:flex;flex-direction:column;gap:12px}
+  .post{background:#fff;border-radius:12px;box-shadow:var(--shadow);border:1px solid #eef3ee;padding:14px 16px}
+  .post .ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+  .post .ph b{color:var(--green-900)}
+  .post .ph time{font-size:.74rem;color:#9aaaa0}
+  .post p{white-space:pre-wrap;color:#33433a;font-size:.95rem}
+  .ix-empty{color:#8a9b90;font-size:.9rem;padding:14px 0}
+</style>
+<section id="share">
+  <div class="wrap">
+    <div class="eyebrow">Photo Wall</div>
+    <h2>📷 사진·탁본 올리기</h2>
+    <p class="lead">숲에서 찍은 사진이나 잎맥 탁본을 올려 함께 나눠요. 스마트폰에서 바로 촬영해 올릴 수 있고, 큰 사진은 <b>자동으로 작게 줄여</b> 저장됩니다.</p>
+    <div class="ix-form">
+      <div class="row">
+        <input type="text" id="ph-name" maxlength="30" placeholder="이름/모둠 (예: 1모둠 민준)" />
+      </div>
+      <label class="file" for="ph-file">📸 사진 선택 / 촬영하기
+        <input type="file" id="ph-file" accept="image/*" capture="environment" hidden />
+      </label>
+      <div class="preview" id="ph-preview"><img id="ph-img" alt="미리보기"><div class="meta" id="ph-meta"></div></div>
+      <div class="row" style="margin-top:12px"><input type="text" id="ph-caption" maxlength="200" placeholder="한 줄 설명 (선택) — 무슨 나무·무엇인가요?" /></div>
+      <button class="ix-btn" id="ph-submit" disabled>올리기</button>
+      <div class="ix-msg" id="ph-msg"></div>
+    </div>
+    <div class="wall" id="ph-wall"><div class="ix-empty">불러오는 중…</div></div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="wrap">
+    <div class="eyebrow">Feedback</div>
+    <h2>💬 피드백 게시판</h2>
+    <p class="lead">숲해설 활동 소감, 좋았던 점, 개선 아이디어를 자유롭게 남겨 주세요.</p>
+    <div class="ix-form">
+      <div class="row">
+        <input type="text" id="fb-name" maxlength="30" placeholder="이름 (예: 김선생)" />
+      </div>
+      <div class="row"><textarea id="fb-message" maxlength="1000" placeholder="피드백을 남겨 주세요…"></textarea></div>
+      <button class="ix-btn" id="fb-submit">남기기</button>
+      <div class="ix-msg" id="fb-msg"></div>
+    </div>
+    <div class="posts" id="fb-posts"><div class="ix-empty">불러오는 중…</div></div>
+  </div>
+</section>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="wrap">
@@ -867,6 +944,137 @@
       lb.style.display = 'flex';
     });
   });
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCsBwy7uAQ00EZlQ5ksQws4ul74QbDOHo4",
+    authDomain: "samyuk-forest.firebaseapp.com",
+    projectId: "samyuk-forest",
+    storageBucket: "samyuk-forest.firebasestorage.app",
+    messagingSenderId: "362748712214",
+    appId: "1:362748712214:web:45a71a21e0f36ca884ec37"
+  };
+  const db = getFirestore(initializeApp(firebaseConfig));
+  const $ = (id) => document.getElementById(id);
+  const lb = $('lightbox');
+
+  function fmt(ts){
+    try{ const d = ts.toDate(); const p=n=>String(n).padStart(2,'0');
+      return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+    }catch(e){ return ''; }
+  }
+
+  // ---- 이미지 리사이즈 (대형 스마트폰 사진 → 작게) ----
+  function loadImg(file){
+    return new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=URL.createObjectURL(file); });
+  }
+  async function resize(file, maxDim=1000, maxChars=820000){
+    let src;
+    try{ src = await createImageBitmap(file, {imageOrientation:'from-image'}); }
+    catch(e){ src = await loadImg(file); }
+    let w = src.width, h = src.height;
+    const s = Math.min(1, maxDim/Math.max(w,h));
+    w = Math.max(1, Math.round(w*s)); h = Math.max(1, Math.round(h*s));
+    const cv = document.createElement('canvas');
+    let q = 0.78, url = '';
+    for(let i=0;i<9;i++){
+      cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(src,0,0,w,h);
+      url = cv.toDataURL('image/jpeg', q);
+      if(url.length <= maxChars) break;
+      if(q > 0.5) q -= 0.1; else { w=Math.round(w*0.85); h=Math.round(h*0.85); }
+    }
+    return { url, w, h, bytes: url.length };
+  }
+
+  // ---- 📷 사진 업로드 ----
+  let pendingPhoto = null;
+  $('ph-file').addEventListener('change', async (e)=>{
+    const f = e.target.files[0]; if(!f) return;
+    $('ph-msg').textContent=''; $('ph-msg').className='ix-msg';
+    $('ph-submit').disabled = true;
+    try{
+      const r = await resize(f);
+      pendingPhoto = r.url;
+      $('ph-img').src = r.url;
+      $('ph-meta').textContent = `${r.w}×${r.h}px · ${Math.round(r.bytes/1024)}KB 로 줄여 저장됩니다`;
+      $('ph-preview').style.display='block';
+      $('ph-submit').disabled = false;
+    }catch(err){ $('ph-msg').textContent='이미지를 읽지 못했어요. 다른 사진을 시도해 주세요.'; $('ph-msg').className='ix-msg err'; }
+  });
+  $('ph-submit').addEventListener('click', async ()=>{
+    const name = $('ph-name').value.trim();
+    if(!name){ $('ph-msg').textContent='이름/모둠을 입력해 주세요.'; $('ph-msg').className='ix-msg err'; return; }
+    if(!pendingPhoto){ $('ph-msg').textContent='사진을 먼저 선택해 주세요.'; $('ph-msg').className='ix-msg err'; return; }
+    $('ph-submit').disabled=true; $('ph-msg').textContent='올리는 중…'; $('ph-msg').className='ix-msg';
+    try{
+      await addDoc(collection(db,'photos'), {
+        name, caption: $('ph-caption').value.trim().slice(0,200), image: pendingPhoto, createdAt: serverTimestamp()
+      });
+      $('ph-msg').textContent='✅ 올렸어요! 고마워요 🌿'; $('ph-msg').className='ix-msg ok';
+      $('ph-name').value=''; $('ph-caption').value=''; $('ph-file').value='';
+      $('ph-preview').style.display='none'; pendingPhoto=null;
+      loadPhotos();
+    }catch(err){ $('ph-msg').textContent='업로드 실패: '+(err.code||err.message); $('ph-msg').className='ix-msg err'; $('ph-submit').disabled=false; }
+  });
+  async function loadPhotos(){
+    const wall = $('ph-wall');
+    try{
+      const snap = await getDocs(query(collection(db,'photos'), orderBy('createdAt','desc'), limit(60)));
+      if(snap.empty){ wall.innerHTML='<div class="ix-empty">아직 올라온 사진이 없어요. 첫 번째로 올려 보세요!</div>'; return; }
+      wall.innerHTML='';
+      snap.forEach(doc=>{
+        const d = doc.data();
+        const fig = document.createElement('figure');
+        const img = document.createElement('img');
+        img.src = d.image; img.loading='lazy'; img.alt = d.caption || d.name;
+        img.addEventListener('click', ()=>{ lb.querySelector('img').src=d.image; lb.querySelector('.cap').textContent=(d.name||'')+(d.caption?(' · '+d.caption):''); lb.style.display='flex'; });
+        const cap = document.createElement('figcaption');
+        const b = document.createElement('b'); b.textContent = d.name || '익명';
+        const sp = document.createElement('span'); sp.textContent = (d.caption?d.caption+' · ':'') + fmt(d.createdAt);
+        cap.appendChild(b); cap.appendChild(sp);
+        fig.appendChild(img); fig.appendChild(cap); wall.appendChild(fig);
+      });
+    }catch(err){ wall.innerHTML='<div class="ix-empty">사진을 불러오지 못했어요. ('+(err.code||err.message)+')</div>'; }
+  }
+
+  // ---- 💬 피드백 게시판 ----
+  $('fb-submit').addEventListener('click', async ()=>{
+    const name = $('fb-name').value.trim(), message = $('fb-message').value.trim();
+    if(!name || !message){ $('fb-msg').textContent='이름과 내용을 모두 입력해 주세요.'; $('fb-msg').className='ix-msg err'; return; }
+    $('fb-submit').disabled=true; $('fb-msg').textContent='남기는 중…'; $('fb-msg').className='ix-msg';
+    try{
+      await addDoc(collection(db,'feedback'), { name, message: message.slice(0,1000), createdAt: serverTimestamp() });
+      $('fb-msg').textContent='✅ 등록됐어요. 고마워요!'; $('fb-msg').className='ix-msg ok';
+      $('fb-name').value=''; $('fb-message').value=''; loadFeedback();
+    }catch(err){ $('fb-msg').textContent='등록 실패: '+(err.code||err.message); $('fb-msg').className='ix-msg err'; }
+    finally{ $('fb-submit').disabled=false; }
+  });
+  async function loadFeedback(){
+    const box = $('fb-posts');
+    try{
+      const snap = await getDocs(query(collection(db,'feedback'), orderBy('createdAt','desc'), limit(100)));
+      if(snap.empty){ box.innerHTML='<div class="ix-empty">아직 피드백이 없어요. 첫 의견을 남겨 주세요!</div>'; return; }
+      box.innerHTML='';
+      snap.forEach(doc=>{
+        const d = doc.data();
+        const el = document.createElement('div'); el.className='post';
+        const ph = document.createElement('div'); ph.className='ph';
+        const b = document.createElement('b'); b.textContent = d.name || '익명';
+        const t = document.createElement('time'); t.textContent = fmt(d.createdAt);
+        ph.appendChild(b); ph.appendChild(t);
+        const p = document.createElement('p'); p.textContent = d.message || '';
+        el.appendChild(ph); el.appendChild(p); box.appendChild(el);
+      });
+    }catch(err){ box.innerHTML='<div class="ix-empty">피드백을 불러오지 못했어요. ('+(err.code||err.message)+')</div>'; }
+  }
+
+  loadPhotos();
+  loadFeedback();
 </script>
 </body>
 </html>
