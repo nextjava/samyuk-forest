@@ -18,7 +18,7 @@ service cloud.firestore {
         && request.resource.data.createdAt is timestamp;
       allow update: if false;
       allow delete: if request.auth != null
-        && request.auth.token.email == 'jits.admin@samyuk-forest.web';
+        && request.auth.token.email == 'nextjava@naver.com';
     }
 
     // 💬 피드백 게시판
@@ -35,7 +35,7 @@ service cloud.firestore {
         && request.resource.data.createdAt is timestamp;
       allow update: if false;
       allow delete: if request.auth != null
-        && request.auth.token.email == 'jits.admin@samyuk-forest.web';
+        && request.auth.token.email == 'nextjava@naver.com';
     }
 
     match /{document=**} {
